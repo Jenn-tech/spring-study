@@ -1,5 +1,7 @@
 package member;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,7 +12,9 @@ public class MemberController {
 	
 	Dao dao ; 
 	public MemberController() {	}
-	public MemberController(Dao dao) {
+	public MemberController(Dao dao) { 
+		//생성자를 통해 dao를 넘겨받음, dao는 인터페이스일것이다
+		//memberdao는 dao를 구현한 것 
 		this.dao = dao;
 	}
 
@@ -39,6 +43,23 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	
+	
+	@RequestMapping(value = "select.mem", method = RequestMethod.GET)
+	public ModelAndView select(Page page) {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("select"); 
+
+		return mv;
+		
+	}
+	
+	
+	
+	
+	
 }
 
 

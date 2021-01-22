@@ -18,6 +18,8 @@
 	<a href='sum.ddd'>두 수의 합</a>
 	<br>
 	<a href='insert.mem'>회원가입</a>
+	<br>
+	<a href='select.mem'>회원조회</a>
 </div>
 </body>
 </html>
