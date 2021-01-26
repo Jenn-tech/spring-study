@@ -1,6 +1,7 @@
 package member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,11 +47,28 @@ public class MemberController {
 	
 	
 	
-	@RequestMapping(value = "select.mem", method = RequestMethod.GET)
-	public ModelAndView select(Page page) {
+	@RequestMapping(value = "select.mem", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView select(Page page) { 
 		ModelAndView mv = new ModelAndView();
 		
-		mv.setViewName("select"); 
+		List<MemberVo> list = null;
+
+		if(page != null) {
+		System.out.println("controller.select()....");
+		System.out.println("nowPage :" + page.getNowPage());
+		}else {
+			System.out.println("page is null");
+		}
+		
+		
+		//page만든 후(dao에서) dao호출
+		Map<String, Object> map = dao.select(page); //select의 반환형은 list<MemberVo>
+		page = (Page)map.get("page");
+		list = (List<MemberVo>)map.get("list");
+		
+		mv.addObject("page", page);
+		mv.addObject("list", list);
+		mv.setViewName("select"); //WEB-INF/member/select.jsp가 viewResolver됨
 
 		return mv;
 		

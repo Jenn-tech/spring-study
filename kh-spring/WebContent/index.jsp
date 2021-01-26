@@ -19,7 +19,7 @@
 	<br>
 	<a href='insert.mem'>회원가입</a>
 	<br>
-	<a href='select.mem'>회원조회</a>
+	<a href='select.mem'>회원조회</a> <!-- 만약 select.mem?nowPage=1이면 null 이 아니지만... 그렇게는 안함 -->
 </div>
 </body>
 </html>
