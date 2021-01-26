@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Index</title>
+<link rel = 'stylesheet' type = 'text/css' href='./css/index.css'>
 </head>
 <body>
 <div id = 'index'>

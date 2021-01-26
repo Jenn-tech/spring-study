@@ -19,18 +19,26 @@
    
    </select>
    
-   <select id="tot_list_size" parameterType="String" resultType="int"> <!--resultType="Integer" 도 괜찮음-->
+   <select id="tot_list_size" parameterType="page" resultType="int"> <!--resultType="Integer" 도 괜찮음-->
       select count(mid) cnt from membervo <!-- 반환된 cnt는 int타입 -->
-      where mid like '%${_parameter}%' or email   like '%${_parameter}%' 
-      or  phone like '%${_parameter}%' or address like '%${_parameter}%'
+      <where>
+		<foreach collection="findStrList" item="v" open="(" close=")" separator="or">
+	          mid like '%${v}%' or email   like '%${v}%' 
+	      or  phone like '%${v}%' or address like '%${v}%'
+		</foreach>			
+      </where>
    </select>
    
    <select id="select" parameterType="page" resultType="mVo" > <!-- mVo conflg.xml에서 별명 지었음-->
       select * from (
           select rownum no, m.* from (
          select * from membervo 
-         where mid like '%${findStr}%' or email   like '%${findStr}%' 
-         or  phone like '%${findStr}%' or address like '%${findStr}%' 
+        <where>
+			<foreach collection="findStrList" item="v" open="(" close=")" separator="or">
+		          mid like '%${v}%' or email   like '%${v}%' 
+		      or  phone like '%${v}%' or address like '%${v}%'
+			</foreach>			
+      </where>
          order by name asc) m  
       ) where no between #{startNo} and #{endNo} 
    </select>

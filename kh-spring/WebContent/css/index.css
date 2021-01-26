@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+#index{
+	width: 1000px;
+	margin: 5px auto;
+}
+
+#index > a {
+	text-decoration: none;
+	list-style : none;
+	display : inline-block;
+	margin-right : -6px;
+	background : #ccc;
+	font-size : 10pt;
+	padding : 5px 10px;
+}
+
+#index > a:hover {
+	background : #555;
+	color : #ff0;
+}

@@ -43,7 +43,7 @@ public class MemberDao implements Dao {
 		System.out.println("Dao.select().............");
 		System.out.println("nowPage : " + p.getNowPage());
 		
-		int cnt = sqlsession.selectOne("member.tot_list_size", p.getFindStr()); //member안의 tot_list_size
+		int cnt = sqlsession.selectOne("member.tot_list_size", p); //member안의 tot_list_size
 		p.setTotListSize(cnt);
 		p.pageCompute();
 		

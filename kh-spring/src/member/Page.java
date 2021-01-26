@@ -1,5 +1,8 @@
 package member;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Page {
 	int totListSize;
@@ -7,12 +10,14 @@ public class Page {
 	int startPage;
 	int endPage;
 	int startNo;
-	int endNo;
+	int endNo; //startNo, endNo로 페이징처리
 	int nowPage;
-	int listSize=10;
+	int listSize=6;
 	int blockSize=5;
 	
-	String findStr;
+	String findStr; //검색어를 넘겨서 _parameter가 된것.
+	
+	List<String> findStrList = new ArrayList<String>();
 	
 	public Page() {}
 	public Page(int tot, int now) {
@@ -33,6 +38,14 @@ public class Page {
 	}
 
 
+	public List<String> getFindStrList() {
+		if(findStr !=null) {
+			String[] temp = findStr.split(" ");
+			findStrList.addAll(Arrays.asList(temp));
+		}
+		return findStrList;
+	}
+	
 	public int getTotListSize() {
 		return totListSize;
 	}
