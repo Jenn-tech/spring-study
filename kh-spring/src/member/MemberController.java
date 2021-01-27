@@ -3,6 +3,8 @@ package member;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 public class MemberController {
 	
 	Dao dao ; 
+	FileUpload fu ;
+
+	
 	public MemberController() {	}
 	public MemberController(Dao dao) { 
 		//생성자를 통해 dao를 넘겨받음, dao는 인터페이스일것이다
@@ -19,7 +24,7 @@ public class MemberController {
 		this.dao = dao;
 	}
 
-	@RequestMapping(value = "insert.mem", method = RequestMethod.GET)
+	@RequestMapping(value = "insert.mem", method = {RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView insert() {
 		ModelAndView mv = new ModelAndView();
 		
@@ -31,8 +36,12 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "insertR.mem", method=RequestMethod.POST)
-	public ModelAndView insert(MemberVo vo) {
+	public ModelAndView insertR(HttpServletRequest req) {
 		ModelAndView mv = new ModelAndView();
+		
+		fu = new FileUpload(req);
+		MemberVo vo = fu.getMember();
+		Page page = fu.getPage();
 		
 		System.out.println("─────────────────────");
 		System.out.println(vo.getMid());

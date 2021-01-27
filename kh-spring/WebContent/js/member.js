@@ -68,7 +68,7 @@ var member = function(){
 	
 	
 	// 이미지 파일 미리보기
-	if(btnPhoto != null){
+	if(btnPhoto != null){ //file tag의 id
 		btnPhoto.onchange = function(ev){
 			var tag = ev.srcElement; // 이벤트 발생한 태그
 			var url = tag.files[0]; // 선택된 파일명
@@ -100,41 +100,23 @@ var member = function(){
 	}
 	
 	
-	
-	if(btnSave != null){
-		btnSave.onclick = function(){
-			var frm = document.frm_member;
-			var checkFlag = true;
-			
-			if(!frm.mid.checkValidity()){
-				alert('mid');
-				checkFlag = false;
-			}else if(!frm.name.checkValidity()){
-				alert('name');
-				checkFlag = false;
-			}else if(!frm.pwd.checkValidity()){
-				alert('pwd');
-				checkFlag = false;
-			}else if(!frm.email.checkValidity()){
-				alert('email');
-				checkFlag = false;
-			}else if(!frm.phone.checkValidity()){
-				alert('phone');
-				checkFlag = false;
-			}
-			
-			//암호와 암호확인의 일치여부
-			if(frm.pwd.value != frm.pwdConfirm.value){
-				alert('암호를 확인해 주소~');
-				return;
-			}
-			if(checkFlag){
-			frm.enctype = 'multipart/form-data';
-			frm.action = 'insertR.mem';
-			frm.submit();
-			}
-		}
-	}
+	if(btnSave != null) { //낫널이 곧 클릭
+      btnSave.onclick = function() {
+         var frm = document.frm_member;
+         
+         // 암호와 암호확인의 일치 여부
+         if(frm.pwd.value != frm.pwdConfirm.value) {
+            alert("암호가 일치하지 않습니다, 암호를 확인해 주세요.");
+            return;
+         }
+            
+         // 파일 업로드 하기 위해 enctype가 필요함.   
+         frm.enctype = 'multipart/form-data';
+         frm.action = 'insertR.mem';
+         frm.submit();
+      }
+   }
+
 	
 	
 	if(btnSelect != null){

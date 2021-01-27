@@ -18,7 +18,7 @@
 			<div>
 				<input type = 'search' name = 'findStr' value='${param.findStr }'/>
 				<input type = 'button' value = '검색' id = 'btnFind' />
-				<input type = 'text' name = 'nowPage' value = '${(empty nowPage)? 1: nowPage}' />
+				<input type = 'text' name = 'nowPage' value = '${(empty param.nowPage)? 1: param.nowPage}' />
 				<input type = 'text' name = 'mid'/>
 			</div>
 		</form>
