@@ -73,8 +73,19 @@ public class MemberController {
 		return mv;
 		
 	}
-	
-	
+	@RequestMapping(value= "view.mem", method = RequestMethod.POST)
+	public ModelAndView view(MemberVo vo) {
+		ModelAndView mv = new ModelAndView();
+		
+		System.out.println("controller.view().....");
+		System.out.println(vo.getMid());
+		
+		vo = dao.view(vo.getMid());
+		mv.addObject("vo", vo);
+		mv.setViewName("view"); //WEB-INF/member/view.jsp
+		
+		return mv;
+	}
 	
 	
 	

@@ -11,9 +11,11 @@ import bean.MemberFactory;
 public class MemberDao implements Dao {
 	
 	SqlSession sqlsession ;
+	MemberFactory f;
 	
 	public MemberDao() {}
 	public MemberDao(MemberFactory f) {
+		this.f = f;
 		sqlsession = f.getFactory().openSession();
 	}
 	@Override
@@ -30,6 +32,7 @@ public class MemberDao implements Dao {
 
 	@Override
 	public Map<String, Object> select(Page p) {
+		sqlsession = f.getFactory().openSession();
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		//page가 null이면 nowpage에 1 넣어준다
@@ -56,6 +59,7 @@ public class MemberDao implements Dao {
 		map.put("list", list);
 		map.put("page", p);
 		
+		//sqlsession.close();
 		return map;
 	}
 
@@ -79,8 +83,14 @@ public class MemberDao implements Dao {
 
 	@Override
 	public MemberVo view(String mid) {
-		// TODO Auto-generated method stub
-		return null;
+		sqlsession = f.getFactory().openSession();
+
+		MemberVo vo = sqlsession.selectOne("member.view", mid);
+		
+		System.out.println(vo.getName());
+		sqlsession.close();
+		return vo;
+		
 	}
 	
 }

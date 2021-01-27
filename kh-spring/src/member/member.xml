@@ -24,7 +24,7 @@
       <where>
 		<foreach collection="findStrList" item="v" open="(" close=")" separator="or">
 	          mid like '%${v}%' or email   like '%${v}%' 
-	      or  phone like '%${v}%' or address like '%${v}%'
+	      or  phone like '%${v}%' or address like '%${v}%' or name like '%${v}%'
 		</foreach>			
       </where>
    </select>
@@ -36,7 +36,7 @@
         <where>
 			<foreach collection="findStrList" item="v" open="(" close=")" separator="or">
 		          mid like '%${v}%' or email   like '%${v}%' 
-		      or  phone like '%${v}%' or address like '%${v}%'
+		      or  phone like '%${v}%' or address like '%${v}%' or name like '%${v}%'
 			</foreach>			
       </where>
          order by name asc) m  
