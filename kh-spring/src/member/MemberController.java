@@ -49,8 +49,8 @@ public class MemberController {
 		System.out.println(vo.getMid());
 		System.out.println(vo.getPwd());
 		System.out.println(vo.getPhone());
-		System.out.println(vo.getPhoto());
-		
+		System.out.println("photo:"+vo.getPhoto());
+		System.out.println("delfile:"+vo.getDelFile());
 		mv.setViewName("result"); //WEB-INF/member/insert_result.jsp
 		mv.addObject("msg", msg);
 		
@@ -99,7 +99,18 @@ public class MemberController {
 		return mv;
 	}
 	
-	
+	@RequestMapping(value ="deleteR.mem", method = RequestMethod.POST)
+	public ModelAndView delete(MemberVo vo) {
+		ModelAndView mv = new ModelAndView();
+		String msg = dao.delete(vo);
+		
+		System.out.println("photo:"+vo.photo);
+		System.out.println("delfile:"+vo.delFile);
+		mv.addObject("msg", msg);
+		mv.setViewName("result");
+		
+		return mv;
+	}
 	
 }
 

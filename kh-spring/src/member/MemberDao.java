@@ -1,5 +1,6 @@
 package member;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,8 +90,21 @@ public class MemberDao implements Dao {
 
 	@Override
 	public String delete(MemberVo vo) {
-		// TODO Auto-generated method stub
-		return null;
+		String msg = "회원정보가 정상적으로 삭제되었습니다.";
+		sqlsession = f.getFactory().openSession();
+		
+		int cnt = sqlsession.delete("member.delete", vo);
+		if(cnt>0) { //select문이 정상적으로 실행됐을 때
+			File file = new File(FileUpload.saveDir + vo.getDelFile());
+			if(file.exists()) file.delete();
+			sqlsession.commit();
+		}else {
+			msg = "회원 정보삭제 중 오류발생";
+			sqlsession.rollback();
+		}
+		
+		sqlsession.close();
+		return msg;
 	}
 
 	@Override
