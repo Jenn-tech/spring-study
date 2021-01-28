@@ -59,14 +59,26 @@ public class MemberDao implements Dao {
 		map.put("list", list);
 		map.put("page", p);
 		
-		//sqlsession.close();
+		sqlsession.close();
 		return map;
 	}
 
 	@Override
 	public String insert(MemberVo vo) {
-		// TODO Auto-generated method stub
-		return null;
+		String msg = "회원 정보가 정상적으로 저장되었습니다.";
+		
+		sqlsession = f.getFactory().openSession();
+		
+		int cnt = sqlsession.insert("member.insert", vo);
+		
+		if(cnt<1) {
+			msg = "회원 정보 저장 중 오류 발생";
+			sqlsession.rollback();
+		}
+		
+		sqlsession.commit();
+		sqlsession.close();
+		return msg;
 	}
 
 	@Override

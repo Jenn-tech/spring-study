@@ -38,3 +38,8 @@
 	text-align : left;
 	font-size : 10pt;
 }
+
+#listItems .item>img{
+	width: 150px;
+	height : 200px;
+}

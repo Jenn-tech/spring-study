@@ -15,7 +15,7 @@ public class MemberController {
 	
 	Dao dao ; 
 	FileUpload fu ;
-
+	String msg;
 	
 	public MemberController() {	}
 	public MemberController(Dao dao) { 
@@ -43,13 +43,16 @@ public class MemberController {
 		MemberVo vo = fu.getMember();
 		Page page = fu.getPage();
 		
+		msg = dao.insert(vo);
+		
 		System.out.println("─────────────────────");
 		System.out.println(vo.getMid());
 		System.out.println(vo.getPwd());
 		System.out.println(vo.getPhone());
+		System.out.println(vo.getPhoto());
 		
-		mv.setViewName("insert_result"); //WEB-INF/member/insert_result.jsp
-		mv.addObject("msg", "회원정보가 정상적으로 저장되었습니다.");
+		mv.setViewName("result"); //WEB-INF/member/insert_result.jsp
+		mv.addObject("msg", msg);
 		
 		return mv;
 	}

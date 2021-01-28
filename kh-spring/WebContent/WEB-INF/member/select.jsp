@@ -29,7 +29,7 @@
 	<div id = 'listItems'>
 		<c:forEach var = 'v' items="${list }">
 			<div class = 'item' onclick = "view('${v.mid}')">
-				<img src = 'http://placehold.it/150x200' align = 'left' >
+				<img src = './upload/${v.photo }' align = 'left' >
 				<span>${v.mid }</span><br>
 				<span>${v.name }</span><br>
 				<span>${v.phone }</span><br>
