@@ -53,11 +53,12 @@
       update membervo set 
       name = #{name}, email = #{email}, zipcode = #{zipcode}, address = #{address}, phone = #{phone}
       
-      <if test="#{photo} != null">
-      , photo= #{photo}
+      <if test="photo != null">
+			, photo= #{photo}
       </if>   
          
       where mid = #{mid} and pwd = #{pwd}
+      
    </update>
    
    <delete id="delete" parameterType="mVo">

@@ -104,13 +104,45 @@ public class MemberController {
 		ModelAndView mv = new ModelAndView();
 		String msg = dao.delete(vo);
 		
-		System.out.println("photo:"+vo.photo);
-		System.out.println("delfile:"+vo.delFile);
 		mv.addObject("msg", msg);
 		mv.setViewName("result");
 		
 		return mv;
 	}
+	
+	@RequestMapping(value ="modify.mem", method = RequestMethod.POST)
+	public ModelAndView modify(MemberVo vo) {
+		ModelAndView mv = new ModelAndView();
+		vo = dao.view(vo.getMid());
+		
+		mv.addObject("vo", vo);
+		mv.setViewName("modify");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "modifyR.mem", method=RequestMethod.POST)
+	public ModelAndView modifyR(HttpServletRequest req) {
+		ModelAndView mv = new ModelAndView();
+		
+		fu = new FileUpload(req);
+		MemberVo vo = fu.getMember();
+		Page page = fu.getPage();
+		
+		msg = dao.update(vo);
+		
+		System.out.println(vo.getMid());
+		System.out.println(vo.getPhoto());
+		System.out.println(vo.getEmail());
+		System.out.println(vo.getName());
+		System.out.println(vo.getZipcode());
+		mv.setViewName("result"); //WEB-INF/member/insert_result.jsp
+		mv.addObject("msg", msg);
+		
+		return mv;
+	}
+	
+	
 	
 }
 

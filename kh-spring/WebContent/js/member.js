@@ -50,19 +50,23 @@ var member = function(){
 	if(btnUpdate != null){
 		btnUpdate.onclick = function(){
 			var frm = document.frm_member;
-			
-			var pwd = prompt("회원정보를 수정하시려면 암호 입력");
-			if(pwd == null){
-				return;
+			var pZone = getID('password_zone');
+	        var btnPassword = getID('btnPassword');
+	        frm.pwd.value='';
+	        pZone.style.display = 'block';
+	         
+	        btnPassword.onclick = function() {
+	        pZone.style.display = 'none';
+         	
+			if(frm.pwd.value != ''){
+				frm.enctype = 'multipart/form-data';
+				frm.action = 'modifyR.mem';
+				frm.submit();
+				}
+		
 			}
-			frm.pwd.value = pwd;
-			//frm.enctype = 'multipart/form-data';
-			frm.enctype = 'multipart/form-data';
-			frm.action = 'update.mem';
-			frm.submit();
 		}
 	}
-	
 	if(btnModify != null){
 		btnModify.onclick = function(){
 			var frm = document.frm_member;

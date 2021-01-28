@@ -84,8 +84,27 @@ public class MemberDao implements Dao {
 
 	@Override
 	public String update(MemberVo vo) {
-		// TODO Auto-generated method stub
-		return null;
+		String msg = "회원 정보가 정상적으로 수정되었습니다.";
+		sqlsession = f.getFactory().openSession();
+		
+		int cnt = sqlsession.update("member.update", vo);
+		
+		if(cnt>0) {
+			sqlsession.commit();
+			
+			if(vo.getPhoto() != null && !vo.getPhoto().equals("")) {
+				File file = new File(FileUpload.saveDir + vo.getDelFile());
+				if (file.exists()) {
+					file.delete();
+				}
+			}
+		}else {
+			msg ="회원 정보 수정 중 오류 발생";
+			sqlsession.rollback();
+		}
+		
+		sqlsession.close();
+		return msg;
 	}
 
 	@Override

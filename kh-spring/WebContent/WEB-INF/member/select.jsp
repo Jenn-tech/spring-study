@@ -29,11 +29,19 @@
 	<div id = 'listItems'>
 		<c:forEach var = 'v' items="${list }">
 			<div class = 'item' onclick = "view('${v.mid}')">
-				<img src = './upload/${v.photo }' align = 'left' >
-				<span>${v.mid }</span><br>
-				<span>${v.name }</span><br>
-				<span>${v.phone }</span><br>
-				<span>${v.email }</span><br>
+				<c:choose>
+					<c:when test="${empty v.photo }">
+						<img src = './image/person.jpg' align = 'left' >
+					
+					</c:when>				
+					<c:otherwise>
+						<img src = './upload/${v.photo }' align = 'left' >
+					</c:otherwise>
+				</c:choose>
+						<span>${v.mid }</span><br>
+						<span>${v.name }</span><br>
+						<span>${v.phone }</span><br>
+						<span>${v.email }</span><br>
 			</div>
 		</c:forEach>
 	</div>
