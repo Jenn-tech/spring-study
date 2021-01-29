@@ -13,7 +13,7 @@
 <body>
 	<div id = 'member'>
 		<h2>회원관리</h2>
-		<form name= 'frm_member' method = 'POST' class = 'insert'>
+		<form name= 'frm_member' id = 'frm_member'method = 'POST' class = 'insert'>
 			<label>아이디</label>
 			<input type = 'text' name= 'mid' size ='10' required maxlength ='10' pattern ='[\w!\-$]{3,10}'/>
 			<br>
@@ -51,8 +51,8 @@
 				<input type = 'button' value = '목록' id = 'btnSelect' />
 				
 				<!-- 원래 hidden -->
-				<input type = 'text' name = 'findStr' value = '${param.findStr }' />
-				<input type = 'text' name = 'nowPage' value = '${param.nowPage }' />
+				<input type = 'hidden' name = 'findStr' value = '${param.findStr }' />
+				<input type = 'hidden' name = 'nowPage' value = '${param.nowPage }' />
 			</div>
 		</form>
 	</div>

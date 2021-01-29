@@ -11,20 +11,8 @@ var member = function(){
 	var btnModify = getID('btnModify');
 	var btnUpdate = getID('btnUpdate');
 	var btnDelete = getID('btnDelete');
-/*	
-	if(btnDelete != null){
-		btnDelete.onclick = function(){
-			var frm = document.frm_member;
-			var pwd = prompt("회원정보를 삭제하시려면 암호를 입력하세요");
-			if(pwd != null){
-				frm.action = 'member.do?job=delete';
-				frm.pwd.value = pwd;
-				frm.mid.disabled=false;
-				frm.submit();
-			}
-		}
-	}
-	*/
+
+
 	if(btnDelete != null) {
       btnDelete.onclick = function() {
          var frm = document.frm_member; // form 가져오기
@@ -37,9 +25,8 @@ var member = function(){
             pZone.style.display = 'none';
          
             if( frm.pwd.value != '' ) {
-               frm.action = 'deleteR.mem';
                frm.mid.disabled = false; // disabled 속성을 false로 주면 disabled라도 값이 넘어감
-               frm.submit();
+               member.delete('deleteR.mem');
             }
          }
             
@@ -59,9 +46,7 @@ var member = function(){
 	        pZone.style.display = 'none';
          	
 			if(frm.pwd.value != ''){
-				frm.enctype = 'multipart/form-data';
-				frm.action = 'modifyR.mem';
-				frm.submit();
+				member.update('modifyR.mem') ;
 				}
 		
 			}
@@ -71,9 +56,8 @@ var member = function(){
 		btnModify.onclick = function(){
 			var frm = document.frm_member;
 			frm.mid.disabled = false;
-			frm.action ='modify.mem';
-			frm.submit();
-		}
+			member.select('modify.mem');
+			}
 	}
 	
 	
@@ -114,17 +98,11 @@ var member = function(){
 	if(btnSave != null) { //낫널이 곧 클릭
       btnSave.onclick = function() {
          var frm = document.frm_member;
-         
-         // 암호와 암호확인의 일치 여부
-         if(frm.pwd.value != frm.pwdConfirm.value) {
-            alert("암호가 일치하지 않습니다, 암호를 확인해 주세요.");
-            return;
-         }
-            
-         // 파일 업로드 하기 위해 enctype가 필요함.   
-         frm.enctype = 'multipart/form-data';
-         frm.action = 'insertR.mem';
-         frm.submit();
+         var checkFlag = true;
+		 if(checkFlag){
+	         // 파일 업로드 하기 위해 enctype가 필요함.   
+	         	member.update('insertR.mem');
+		}
       }
    }
 
@@ -133,8 +111,7 @@ var member = function(){
 	if(btnSelect != null){
 		btnSelect.onclick = function(){
 			var frm = document.frm_member;
-			frm.action = 'select.mem';
-			frm.submit();
+			member.select('select.mem');
 		}
 	}
 	
@@ -142,10 +119,9 @@ var member = function(){
 	if(btnFind != null){
 		btnFind.onclick = function(){
 			var frm = document.frm_member;
-			frm.action = "select.mem";
 			frm.nowPage.value = 1;
-			frm.submit();
-		}
+			member.select();
+			}
 	}
 	
 	
@@ -153,21 +129,85 @@ var member = function(){
 	if(btnInsert != null){
 		btnInsert.onclick = function(){
 			var frm = document.frm_member;
-			frm.action = 'insert.mem';
-			frm.submit();
+			member.select('insert.mem');
 		}
 	}
+}//end of member()
+
+member.goPage=function(page){ //member.gopage를 호출함
+	var frm = document.frm_member;
+	frm.nowPage.value = page;
+	member.select();
+}
+member.view=function(mid){
+	var frm = document.frm_member;
+	frm.mid.value = mid;
+	member.select('view.mem');
 }
 
-function goPage(page){
-	var frm = document.frm_member;
-	frm.action = 'select.mem';
-	frm.nowPage.value = page;
-	frm.submit();
+//spring -> ajax로 호출
+member.select = function(url){
+
+	if(url == null ){
+		url = 'select.mem';
+	}
+	
+	$param = $('#frm_member').serialize();
+	
+	$.ajax({
+		url 	: url,
+		data 	: $param,
+		dataType: 'html', //응답 데이터
+		method  : 'POST',
+		success : function(data){
+			$('#here').html(data);
+		}
+	});
+
+
 }
-function view(mid){
-	var frm = document.frm_member;
-	frm.action = 'view.mem';
-	frm.mid.value = mid;
-	frm.submit();
+
+
+member.delete = function(url){
+
+	if(url == null ){
+		url = 'select.mem';
+	}
+	
+	$param = $('#frm_member').serialize();
+	
+	$.ajax({
+		url 	: url,
+		data 	: $param,
+		dataType: 'html', //응답 데이터
+		method  : 'POST',
+		success : function(data){
+			$('#here').html(data);
+		}
+	});
+
+
 }
+
+
+//입력하기, 수정하기
+member.update = function(url){ //insertR, modifyR 둘중 하나 들어옴
+	var formData = new FormData($('#frm_member')[0]);
+	
+	$.ajax({
+		url 	: url,
+		data  	: formData,
+		dataType: 'html',
+		method  : 'POST',
+		enctype : 'multipart/form-data',
+		contentType : false, //text로 바뀌는거 예방
+		processData : false, 
+		success : function(data){
+			$('#here').html(data);
+		}
+	})
+}
+
+
+
+
